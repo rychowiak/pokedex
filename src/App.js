@@ -18,6 +18,7 @@ function App() {
             // console.log(data);
             setPokemons((prevState) => {
               prevState = [...prevState, data];
+              prevState.sort((a, b) => (a.id > b.id ? 1 : -1));
               return prevState;
             });
           });
@@ -29,13 +30,27 @@ function App() {
     <div className="App">
       <h1 className="font-semibold text-blue-400 underline">PokeDex</h1>
       <h4>Gotta catch 'em all!</h4>
-      <div>
-        {pokemons.map((p) => (
-          <div className="flex justify-center ">
-            <img src={p.sprites.front_default} alt="pokemon img" />
-            <div>{p.name}</div>
-          </div>
-        ))}
+      <div className="m-0 p-0 pt-100px flex">
+        <div className="flex flex-wrap p-4 ">
+          {pokemons.map((p) => (
+            <div
+              key={p.id}
+              className="flex flex-col justify-around items-center w-300px shadow-md shadow-black rounded-xl py-2 px-0 my-3 mx-4 box-border "
+            >
+              <div className="card-image ">
+                <img
+                  src={p.sprites.other["official-artwork"].front_default}
+                  alt="pokemon img"
+                  className="w-52 bg-gray-200"
+                />
+              </div>
+              <div>
+                <div className="font-semibold text-lg">{p.name}</div>
+                <div>{p.types[0].type.name}</div>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

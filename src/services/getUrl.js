@@ -6,8 +6,8 @@ const apiResponse = (apiResponse) => {
   return resultsUrl;
 };
 
-export default async function getUrl() {
-  return await fetch(API_URL)
+export default function getUrl() {
+  return fetch(API_URL)
     .then((res) => res.json())
     .then(apiResponse);
 }
