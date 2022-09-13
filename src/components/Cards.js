@@ -13,7 +13,7 @@ export default function Card(props) {
             className="w-52 bg-gray-200"
           />
           <div className="card-image ">
-            <p>N.º0{p.id}</p>
+            <p>N.º{p.id.toString().padStart(3, "0")}</p>
           </div>
           <div>
             <div className="font-semibold text-lg">{p.name}</div>
