@@ -2,38 +2,44 @@ import { useState, useEffect } from "react";
 import getPokemons from "../services/getPokemons";
 import Card from "./Cards";
 import { API_URL } from "../services/settings";
-import PokemonLimit from "./PokemonLimit";
 
 const INITIAL_PAGE = 0;
 
 export default function PokemonList() {
   const [allPokemons, setAllPokemons] = useState([]);
   const [page, setPage] = useState(INITIAL_PAGE);
-  const [limit, setLimit] = useState(5);
+  const [limit, setLimit] = useState();
 
-  // let apiURL = `${API_URL}?offset=${page * limit}&limit=${limit}`;
+  let apiURL = `${API_URL}?offset=${page * limit}&limit=${limit}`;
 
   useEffect(
     function () {
-      getPokemons({ page, limit }).then((pokemon) => setAllPokemons(pokemon));
+      getPokemons(apiURL).then((data) => {
+        data.results.map(async (p) => {
+          const response = await fetch(`${API_URL}/${p.name}`);
+          const data = await response.json();
+
+          setAllPokemons((prevState) => {
+            prevState = [...prevState, data];
+            prevState.sort((a, b) => (a.id > b.id ? 1 : -1));
+            return prevState;
+          });
+        });
+      });
     },
-    [page]
+    [apiURL]
   );
-  // console.log(allPokemons);
 
   useEffect(
     function () {
       if (page === INITIAL_PAGE) return;
-      getPokemons().then((data) => data);
+      getPokemons(apiURL).then((data) => data);
     },
-    [page]
+    [apiURL, page]
   );
 
   const handleNextPage = () => {
     setPage(page + 1);
-  };
-  const handlePokemonLimit = (e) => {
-    console.log(e.target.value);
   };
 
   return (
@@ -44,7 +50,6 @@ export default function PokemonList() {
         <div className="App">
           <h1 className="font-semibold text-blue-400 underline">PokeDex</h1>
           <h4>Gotta catch 'em all!</h4>
-          <PokemonLimit limit={limit} handleLimit={handlePokemonLimit} />
           <div className="m-0 p-0 pt-100px flex">
             <Card pokemon={allPokemons} />
           </div>
