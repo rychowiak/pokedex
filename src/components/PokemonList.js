@@ -31,9 +31,8 @@ export default function PokemonList() {
   };
 
   const handlePokemonLimit = (e) => {
-    const limitValue = parseInt(e.target.innerText);
     setPage(INITIAL_PAGE);
-    setLimit(limitValue);
+    setLimit(parseInt(e.target.innerText));
   };
 
   return (
@@ -42,8 +41,12 @@ export default function PokemonList() {
         <h1>Loading</h1>
       ) : (
         <div className="App">
-          <h1 className="font-semibold text-blue-400 underline">PokeDex</h1>
-          <h4>Gotta catch 'em all!</h4>
+          <h1 className="font-pokemon text-blue-800 text-5xl tracking-wider underline pb-5">
+            PokéDex
+          </h1>
+          <h4 className="font-pokemon text-blue-800 text-2xl tracking-wide pb-5">
+            Gotta catch 'em all!
+          </h4>
           <PokemonLimit limit={limit} handleLimit={handlePokemonLimit} />
           <div className="m-0 p-0 pt-100px flex">
             <Card pokemon={allPokemons} />

@@ -1,6 +1,14 @@
 .App {
   text-align: center;
 }
+h1 {
+  -webkit-text-fill-color: hsl(47, 100%, 51%);
+  -webkit-text-stroke-width: 3px;
+}
+h4 {
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke-width: 2px;
+}
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
