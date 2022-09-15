@@ -12,7 +12,7 @@ const getPokemonObject = async (apiResponse) => {
 };
 
 export default async function getPokemons(props) {
-  const { limit = 5, page } = props;
+  const { limit, page } = props;
   const apiURL = `${API_URL}?offset=${page * limit}&limit=${limit}`;
 
   return fetch(apiURL)

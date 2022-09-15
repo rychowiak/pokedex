@@ -17,18 +17,9 @@ export default function PokemonList() {
 
   useEffect(
     function () {
-      getPokemons({ limit }).then((pokemon) => setAllPokemons(pokemon));
+      getPokemons({ limit, page }).then((pokemon) => setAllPokemons(pokemon));
     },
     [limit, page]
-  );
-
-  useEffect(
-    function () {
-      if (page === INITIAL_PAGE) return;
-      getPokemons({ page }).then((pokemons) => setAllPokemons(pokemons));
-      console.log(page);
-    },
-    [page]
   );
 
   const handleNextPage = () => {
@@ -40,7 +31,9 @@ export default function PokemonList() {
   };
 
   const handlePokemonLimit = (e) => {
-    console.log(e.target.value);
+    const limitValue = parseInt(e.target.innerText);
+    setPage(INITIAL_PAGE);
+    setLimit(limitValue);
   };
 
   return (
