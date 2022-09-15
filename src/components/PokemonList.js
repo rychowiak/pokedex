@@ -1,8 +1,12 @@
 import { useState, useEffect } from "react";
 import getPokemons from "../services/getPokemons";
 import Card from "./Cards";
-import { API_URL } from "../services/settings";
 import PokemonLimit from "./PokemonLimit";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faChevronLeft,
+  faChevronRight,
+} from "@fortawesome/free-solid-svg-icons";
 
 const INITIAL_PAGE = 0;
 
@@ -15,13 +19,14 @@ export default function PokemonList() {
     function () {
       getPokemons({ limit }).then((pokemon) => setAllPokemons(pokemon));
     },
-    [limit]
+    [limit, page]
   );
 
   useEffect(
     function () {
       if (page === INITIAL_PAGE) return;
-      getPokemons(page);
+      getPokemons({ page }).then((pokemons) => setAllPokemons(pokemons));
+      console.log(page);
     },
     [page]
   );
@@ -29,6 +34,11 @@ export default function PokemonList() {
   const handleNextPage = () => {
     setPage(page + 1);
   };
+  const handlePrevPage = () => {
+    if (page === 0) return;
+    setPage(page - 1);
+  };
+
   const handlePokemonLimit = (e) => {
     console.log(e.target.value);
   };
@@ -45,12 +55,16 @@ export default function PokemonList() {
           <div className="m-0 p-0 pt-100px flex">
             <Card pokemon={allPokemons} />
           </div>
-          <button
-            className="bg-blue-500 rounded-md text-white m-2 px-3 py-1"
+          <FontAwesomeIcon
+            icon={faChevronLeft}
+            className="bg-blue-500 rounded-md text-white m-2 px-3 py-1 cursor-pointer"
+            onClick={handlePrevPage}
+          />
+          <FontAwesomeIcon
+            icon={faChevronRight}
+            className="bg-blue-500 rounded-md text-white m-2 px-3 py-1 cursor-pointer"
             onClick={handleNextPage}
-          >
-            Go to next page
-          </button>
+          />
         </div>
       )}
     </>
