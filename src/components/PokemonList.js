@@ -7,17 +7,23 @@ import {
   faChevronLeft,
   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
+import Loader from "./loader";
 
 const INITIAL_PAGE = 0;
 
 export default function PokemonList() {
   const [allPokemons, setAllPokemons] = useState([]);
   const [page, setPage] = useState(INITIAL_PAGE);
-  const [limit, setLimit] = useState(5);
+  const [loading, setLoading] = useState(false);
+  const [limit, setLimit] = useState(10);
 
   useEffect(
     function () {
-      getPokemons({ limit, page }).then((pokemon) => setAllPokemons(pokemon));
+      setLoading(true);
+      getPokemons({ limit, page }).then((pokemon) => {
+        setAllPokemons(pokemon);
+        setLoading(false);
+      });
     },
     [limit, page]
   );
@@ -37,8 +43,8 @@ export default function PokemonList() {
 
   return (
     <>
-      {!allPokemons ? (
-        <h1>Loading</h1>
+      {loading ? (
+        <Loader />
       ) : (
         <div className="App">
           <h1 className="font-pokemon text-blue-800 text-5xl tracking-wider underline pb-5">
