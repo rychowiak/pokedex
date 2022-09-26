@@ -15,7 +15,7 @@ export default function PokemonList() {
   const [allPokemons, setAllPokemons] = useState([]);
   const [page, setPage] = useState(INITIAL_PAGE);
   const [loading, setLoading] = useState(false);
-  const [limit, setLimit] = useState(10);
+  const [limit, setLimit] = useState(20);
 
   useEffect(
     function () {

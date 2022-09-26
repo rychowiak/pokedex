@@ -5,7 +5,7 @@ import { faCheck, faChevronDown } from "@fortawesome/free-solid-svg-icons";
 
 const limits = [{ limit: 5 }, { limit: 10 }, { limit: 20 }, { limit: 50 }];
 export default function PokemonLimit({ handleLimit }) {
-  const [selected, setSelected] = useState(limits[0]);
+  const [selected, setSelected] = useState(limits[2]);
 
   return (
     <div className="top-16 w-52">
